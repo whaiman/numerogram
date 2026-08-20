@@ -1,0 +1,34 @@
+{
+    "Index": {
+        "title": "Numerogram",
+        "subtitle": "Riyazi sabitlərdən internet memlərinə qədər: Kainatın bütün ədədlərinin evi.",
+        "randomNumber": "Təsadüfi ədəd",
+        "searchPlaceholder": "Ədəd axtarın (məsələn, 42, pi)...",
+        "searchButton": "Axtar",
+        "trending": "Trenddə olan ədədlər",
+        "suggestFact": "Fakt təklif et",
+        "or": "və ya"
+    },
+    "NumberPage": {
+        "passportTitle": "Ədədin Pasportu",
+        "parity": "Cüt / Tək",
+        "even": "Cüt",
+        "odd": "Tək",
+        "binary": "İkilik kod",
+        "factsTitle": "Faktlar lenti",
+        "noFacts": "Bu ədəd üçün hələ fakt əlavə edilməyib.",
+        "addFactButton": "+ Fakt əlavə et",
+        "back": "Geri"
+    },
+    "Categories": {
+        "science": "Elm",
+        "memes": "Memlər",
+        "pop-culture": "Pop Mədəniyyət",
+        "history": "Tarix"
+    },
+    "Common": {
+        "loading": "Yüklənir...",
+        "share": "Paylaş",
+        "upvote": "Bəyən"
+    }
+}

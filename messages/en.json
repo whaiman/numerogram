@@ -1,0 +1,40 @@
+{
+    "Index": {
+        "title": "Numerogram",
+        "subtitle": "From math constants to internet memes: the home for all numbers in the universe.",
+        "randomNumber": "Random Number",
+        "searchPlaceholder": "Search number (e.g. 42, pi)...",
+        "searchButton": "Search",
+        "trending": "Trending Numbers",
+        "suggestFact": "Suggest a Fact",
+        "or": "or"
+    },
+    "NumberPage": {
+        "passportTitle": "Number Passport",
+        "parity": "Parity",
+        "even": "Even",
+        "odd": "Odd",
+        "binary": "Binary",
+        "factsTitle": "Facts Feed",
+        "noFacts": "No facts added for this number yet.",
+        "addFactButton": "+ Add Fact",
+        "back": "Back",
+        "generatedProfile": "Automatically generated"
+    },
+    "NotFound": {
+        "h1": "Anomaly in the matrix",
+        "p": "What you're looking for is neither a number nor a known constant. \n Perhaps it's a typo?",
+        "to-main": "To main"
+    },
+    "Categories": {
+        "science": "Science",
+        "memes": "Memes",
+        "pop-culture": "Pop Culture",
+        "history": "History"
+    },
+    "Common": {
+        "loading": "Loading...",
+        "share": "Share",
+        "upvote": "Like"
+    }
+}
