@@ -18,7 +18,13 @@
         "factsTitle": "Faktlar lenti",
         "noFacts": "Bu ədəd üçün hələ fakt əlavə edilməyib.",
         "addFactButton": "+ Fakt əlavə et",
-        "back": "Geri"
+        "back": "Geri",
+        "generatedProfile": "Avtomatik yaradılıb"
+    },
+    "NotFound": {
+        "h1": "Matrisdə anomaliya",
+        "p": "Axtardığınız şey nə ədəddir, nə də tanınmış sabitdir. \n Bəlkə də yazıda səhv etmisiniz?",
+        "to-main": "Əsas səhifəyə"
     },
     "Categories": {
         "science": "Elm",

@@ -143,7 +143,7 @@ export default async function NumberPage({
         </div>
         <div className="flex flex-col gap-4">
           {numberData.facts && numberData.facts.length > 0 ? (
-            numberData.facts.map((fact: Fact) => (
+            (numberData.facts as any).map((fact: Fact) => (
               <article
                 key={fact.id}
                 className="bg-zinc-900 border border-zinc-800 rounded-2xl p-5 hover:border-zinc-700 transition-colors"
