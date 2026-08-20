@@ -36,5 +36,11 @@
         "loading": "Загрузка...",
         "share": "Поделиться",
         "upvote": "Нравится"
+    },
+    "Footer": {
+        "madeBy": "Создано",
+        "githubProfile": "whaiman",
+        "repoLabel": "Репозиторий",
+        "rights": "Все права защищены."
     }
 }

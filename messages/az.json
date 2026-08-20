@@ -36,5 +36,11 @@
         "loading": "Yüklənir...",
         "share": "Paylaş",
         "upvote": "Bəyən"
+    },
+    "Footer": {
+        "madeBy": "Tərəfindən hazırlanmışdır",
+        "githubProfile": "whaiman",
+        "repoLabel": "Repozitoriya",
+        "rights": "Bütün hüquqlar qorunur."
     }
 }
