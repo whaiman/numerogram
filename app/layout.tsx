@@ -25,7 +25,7 @@ export default async function RootLayout({
   return (
     <html lang={locale}>
       <body className="bg-zinc-950 text-white min-h-screen antialiased">
-        <div className="absolute">
+        <div className="fixed top-4 left-6 z-[100]">
           <LanguageSwitcher currentLocale={locale as Locale} />
         </div>
         <NextIntlClientProvider messages={messages}>
