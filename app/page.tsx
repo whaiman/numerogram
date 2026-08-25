@@ -27,11 +27,18 @@ export default function Home() {
 
     if (!rawQuery) return;
 
-    const cleanSlug = rawQuery.trim().toLowerCase().replace(/\s+/g, "-");
+    const cleanSlug = rawQuery
+      .trim()
+      .toLowerCase()
+      .replace(/\s+/g, "-")
+      .replace(/[^\p{L}\p{N}-]+/gu, "");
 
-    if (!cleanSlug) return;
+    if (!cleanSlug) {
+      notFound();
+      return;
+    }
 
-    redirect(`/${cleanSlug}`);
+    redirect(`/${encodeURIComponent(cleanSlug)}`);
   }
 
   const currentYear = new Date().getFullYear();
