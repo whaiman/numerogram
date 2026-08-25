@@ -23,7 +23,7 @@ export default async function NotFound() {
 
       <div className="flex gap-4">
         <Link
-          href={`/${locale}`}
+          href={`/`}
           className="px-6 py-3 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-zinc-200 font-medium transition"
         >
           {t("to-main")}

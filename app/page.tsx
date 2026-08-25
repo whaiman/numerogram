@@ -1,11 +1,9 @@
 import { useTranslations } from "next-intl";
-import { getLocale } from "next-intl/server";
-import { redirect } from "next/navigation";
-import { supabase } from "../lib/supabase";
+import { notFound, redirect } from "next/navigation";
+import { supabase } from "./lib/supabase";
 
 const GITHUB_USERNAME = "whaiman";
 const REPO_NAME = "numerogram";
-
 
 export default function Home() {
   const t = useTranslations("Index");
@@ -13,15 +11,13 @@ export default function Home() {
 
   async function handleRandomRedirect() {
     "use server";
-
-    const locale = await getLocale();
     const { data: randomSlug, error } = await supabase.rpc("get_random_slug");
 
     if (error || !randomSlug) {
-      redirect(`/${locale}/404`);
+      notFound();
     }
 
-    redirect(`/${locale}/${randomSlug}`);
+    redirect(`/${randomSlug}`);
   }
 
   async function handleSearch(formData: FormData) {
@@ -34,9 +30,8 @@ export default function Home() {
     const cleanSlug = rawQuery.trim().toLowerCase().replace(/\s+/g, "-");
 
     if (!cleanSlug) return;
-    const locale = await getLocale();
 
-    redirect(`/${locale}/${cleanSlug}`);
+    redirect(`/${cleanSlug}`);
   }
 
   const currentYear = new Date().getFullYear();
@@ -96,7 +91,11 @@ export default function Home() {
               className="flex items-center gap-1.5 text-zinc-300 hover:text-emerald-400 transition-colors font-medium"
               aria-label={`GitHub profile of ${GITHUB_USERNAME}`}
             >
-              <img src="/github.svg" alt="" className="w-4 h-4 invert opacity-60" />
+              <img
+                src="/github.svg"
+                alt=""
+                className="w-4 h-4 invert opacity-60"
+              />
               {tf("githubProfile")}
             </a>
             <span className="text-zinc-700">·</span>

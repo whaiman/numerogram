@@ -1,6 +1,6 @@
 import { supabase } from "@/app/lib/supabase";
 import { notFound } from "next/navigation";
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 import Link from "next/link";
 import { getLocalizedData } from "@/utils/i18n";
 
@@ -17,9 +17,10 @@ interface Fact {
 export default async function NumberPage({
   params,
 }: {
-  params: Promise<{ locale: string; slug: string }>;
+  params: Promise<{ slug: string }>;
 }) {
-  const { locale, slug } = await params;
+  const { slug } = await params;
+  const locale = await getLocale();
   const t = await getTranslations({ locale, namespace: "NumberPage" });
   const tCommon = await getTranslations({ locale, namespace: "Common" });
 
@@ -78,7 +79,7 @@ export default async function NumberPage({
       {/* Back button */}
       <nav className="mt-4">
         <Link
-          href={`/${locale}`}
+          href={`/`}
           className="text-zinc-400 hover:text-emerald-400 transition-colors flex items-center gap-2"
         >
           ← {t("back")}

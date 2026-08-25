@@ -1,15 +1,11 @@
 import { NextIntlClientProvider } from "next-intl";
-import { notFound } from "next/navigation";
-import { getMessages } from "next-intl/server";
-import "../globals.css";
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations, getMessages } from "next-intl/server";
+import { LanguageSwitcher } from "@/components/language-switcher";
+import type { Locale } from "@/i18n/locale-config";
+import "./globals.css";
 
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ locale: string }>;
-}) {
-  const { locale } = await params;
+export async function generateMetadata() {
+  const locale = await getLocale();
   const t = await getTranslations({ locale, namespace: "Index" });
 
   return {
@@ -20,21 +16,18 @@ export async function generateMetadata({
 
 export default async function RootLayout({
   children,
-  params,
 }: {
   children: React.ReactNode;
-  params: Promise<{ locale: string }>;
 }) {
-  const { locale } = await params;
-  if (!locale.includes(locale)) {
-    notFound();
-  }
-
+  const locale = await getLocale();
   const messages = await getMessages();
 
   return (
     <html lang={locale}>
       <body className="bg-zinc-950 text-white min-h-screen antialiased">
+        <div className="absolute">
+          <LanguageSwitcher currentLocale={locale as Locale} />
+        </div>
         <NextIntlClientProvider messages={messages}>
           {children}
         </NextIntlClientProvider>
