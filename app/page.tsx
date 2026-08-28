@@ -5,6 +5,21 @@ import { supabase } from "./lib/supabase";
 const GITHUB_USERNAME = "whaiman";
 const REPO_NAME = "numerogram";
 
+function slugifyQuery(raw: string): string {
+  let s = raw.trim().toLowerCase();
+
+  s = s.replace(/(\d),(\d)/g, "$1.$2");
+  s = s.replace(/(\d)\s+(?=\d)/g, "$1");
+  s = s.replace(/\s+/g, "-");
+  s = s.replace(/[^\p{L}\p{N}\-.]+/gu, "");
+  s = s.replace(/(?<!\d)\.|\.(?!\d)/g, "");
+  s = s.replace(/-+/g, "-");
+  s = s.replace(/-$/, "");
+  s = s.replace(/^-(?!\d)/, "");
+
+  return s;
+}
+
 export default function Home() {
   const t = useTranslations("Index");
   const tf = useTranslations("Footer");
@@ -27,18 +42,11 @@ export default function Home() {
 
     if (!rawQuery) return;
 
-    const cleanSlug = rawQuery
-      .trim()
-      .toLowerCase()
-      .replace(/\s+/g, "-")
-      .replace(/[^\p{L}\p{N}-]+/gu, "");
+    const cleanSlug = slugifyQuery(rawQuery);
 
-    if (!cleanSlug) {
-      notFound();
-      return;
-    }
+    const targetSlug = cleanSlug || rawQuery.trim();
 
-    redirect(`/${encodeURIComponent(cleanSlug)}`);
+    redirect(`/${encodeURIComponent(targetSlug)}`);
   }
 
   const currentYear = new Date().getFullYear();
