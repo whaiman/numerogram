@@ -6,5 +6,5 @@ export const LOCALES = routing.locales;
 export const LOCALE_LABELS: Record<Locale, string> = {
   en: "English",
   ru: "Русский",
-  az: "Azərbaycan",
+  az: "Azərbaycanca",
 };

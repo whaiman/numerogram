@@ -101,7 +101,7 @@ export default async function Home({
           </form>
         </div>
 
-        <div className="mt-12 w-full">
+        <div className="mt-20 w-full">
           <NumberMarquee />
         </div>
       </main>

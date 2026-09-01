@@ -1,5 +1,5 @@
 import { NextIntlClientProvider } from "next-intl";
-import { getTranslations, getMessages } from "next-intl/server";
+import { getTranslations, getMessages, getLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import { LanguageSwitcher } from "@/components/language-switcher";
@@ -25,13 +25,11 @@ export async function generateMetadata({
 
 export default async function LocaleLayout({
   children,
-  params,
 }: {
   children: React.ReactNode;
-  params: Promise<{ locale: Locale }>;
 }) {
-  const { locale } = await params;
-  if (!routing.locales.includes(locale)) notFound();
+  const locale = await getLocale();
+  if (!(routing.locales as readonly string[]).includes(locale)) notFound();
   const messages = await getMessages();
 
   return (

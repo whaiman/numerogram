@@ -10,12 +10,9 @@ import { getNumberBySlug, getFactsByNumberId } from "@/app/lib/data";
 
 interface Fact {
   id: number;
-  content: any;
+  content: string;
   upvotes: number;
-  categories: {
-    name: any;
-    slug: string;
-  };
+  categories: { name: string; slug: string }[] | null;
 }
 
 type Translator = (key: string) => string;
@@ -223,7 +220,7 @@ async function FactsFeed({
         >
           <div className="flex items-center gap-2 mb-3">
             <span className="text-xs font-bold uppercase tracking-wider bg-zinc-800 text-zinc-300 px-2 py-1 rounded">
-              {getLocalizedData(fact.categories.name, locale)}
+              {getLocalizedData(fact.categories?.[0]?.name, locale)}
             </span>
           </div>
           <p className="text-zinc-200 text-lg leading-relaxed mb-4">
