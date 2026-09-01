@@ -1,1 +1,17 @@
 @import "tailwindcss";
+
+.kao-banner {
+  background: linear-gradient(180deg, #18181b 0%, #09090b 100%) !important;
+  border-bottom: 2px solid #10b981 !important;
+  text-shadow: none !important;
+
+  position: relative !important;
+  z-index: 101 !important;
+}
+
+.kao-banner a {
+  color: #34d399 !important;
+}
+.kao-banner-close {
+  color: #a1a1aa !important;
+}

@@ -5,6 +5,7 @@ import { routing } from "@/i18n/routing";
 import { LanguageSwitcher } from "@/components/language-switcher";
 import type { Locale } from "@/i18n/locale-config";
 import { Toaster } from "sonner";
+import Script from "next/script";
 import "../globals.css";
 
 export function generateStaticParams() {
@@ -36,8 +37,12 @@ export default async function LocaleLayout({
   return (
     <html lang={locale} suppressHydrationWarning>
       <body className="bg-zinc-950 text-white min-h-screen antialiased">
+        <Script
+          src="https://keepandroidopen.org/banner.js?size=minimal&link=https://keepandroidopen.org"
+          strategy="afterInteractive"
+        />
         <NextIntlClientProvider messages={messages}>
-          <div className="fixed top-4 left-6 z-[100] flex items-center gap-2">
+          <div className="fixed top-0 z-[100] flex items-center gap-2 p-4 mt-2">
             <LanguageSwitcher currentLocale={locale as Locale} />
           </div>
           {children}
