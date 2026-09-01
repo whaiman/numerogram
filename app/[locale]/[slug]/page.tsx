@@ -12,7 +12,10 @@ interface Fact {
   id: number;
   content: string;
   upvotes: number;
-  categories: { name: string; slug: string }[] | null;
+  categories:
+    | { name: any; slug: string }
+    | { name: any; slug: string }[]
+    | null;
 }
 
 type Translator = (key: string) => string;
@@ -213,29 +216,40 @@ async function FactsFeed({
 
   return (
     <div className="flex flex-col gap-4">
-      {(facts as Fact[]).map((fact) => (
-        <article
-          key={fact.id}
-          className="bg-zinc-900 border border-zinc-800 rounded-2xl p-5 hover:border-zinc-700 transition-colors"
-        >
-          <div className="flex items-center gap-2 mb-3">
-            <span className="text-xs font-bold uppercase tracking-wider bg-zinc-800 text-zinc-300 px-2 py-1 rounded">
-              {getLocalizedData(fact.categories?.[0]?.name, locale)}
-            </span>
-          </div>
-          <p className="text-zinc-200 text-lg leading-relaxed mb-4">
-            {getLocalizedData(fact.content, locale)}
-          </p>
-          <div className="flex items-center gap-4 border-t border-zinc-800/60 pt-3">
-            <button className="flex items-center gap-1 text-sm text-zinc-400 hover:text-emerald-400 transition">
-              ▲ {fact.upvotes || 0} {tCommon("upvote")}
-            </button>
-            <button className="text-sm text-zinc-500 hover:text-zinc-300 transition">
-              {tCommon("share")}
-            </button>
-          </div>
-        </article>
-      ))}
+      {(facts as Fact[]).map((fact) => {
+        // Универсальное извлечение: работаем и с объектом, и с массивом
+        const category = Array.isArray(fact.categories)
+          ? fact.categories[0]
+          : fact.categories;
+
+        const categoryName = getLocalizedData(category?.name, locale);
+
+        return (
+          <article
+            key={fact.id}
+            className="bg-zinc-900 border border-zinc-800 rounded-2xl p-5 hover:border-zinc-700 transition-colors"
+          >
+            {categoryName && (
+              <div className="flex items-center gap-2 mb-3">
+                <span className="text-xs font-bold uppercase tracking-wider bg-zinc-800 text-zinc-300 px-2 py-1 rounded">
+                  {categoryName}
+                </span>
+              </div>
+            )}
+            <p className="text-zinc-200 text-lg leading-relaxed mb-4">
+              {getLocalizedData(fact.content, locale)}
+            </p>
+            <div className="flex items-center gap-4 border-t border-zinc-800/60 pt-3">
+              <button className="flex items-center gap-1 text-sm text-zinc-400 hover:text-emerald-400 transition">
+                ▲ {fact.upvotes || 0} {tCommon("upvote")}
+              </button>
+              <button className="text-sm text-zinc-500 hover:text-zinc-300 transition">
+                {tCommon("share")}
+              </button>
+            </div>
+          </article>
+        );
+      })}
     </div>
   );
 }
