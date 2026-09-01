@@ -2,6 +2,7 @@ import { getTranslations } from "next-intl/server";
 import { notFound, redirect } from "next/navigation";
 import { supabase } from "../lib/supabase";
 import type { Locale } from "../../i18n/locale-config";
+import { NumberMarquee } from "@/components/number-marquee";
 
 const GITHUB_USERNAME = "whaiman";
 const REPO_NAME = "numerogram";
@@ -98,6 +99,10 @@ export default async function Home({
               {t("randomNumber")}
             </button>
           </form>
+        </div>
+
+        <div className="mt-12 w-full">
+          <NumberMarquee />
         </div>
       </main>
 
