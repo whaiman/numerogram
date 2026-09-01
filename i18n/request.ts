@@ -1,37 +1,25 @@
 import { getRequestConfig } from "next-intl/server";
-import { cookies, headers } from "next/headers";
-import {
-  isLocale,
-  matchLocale,
-  DEFAULT_LOCALE,
-  LOCALE_COOKIE_NAME,
-  type Locale,
-} from "./locale-config";
+import { routing } from "./routing";
 
 export default getRequestConfig(async ({ requestLocale }) => {
-  const cookieStore = await cookies();
-  const cookieLocale = cookieStore.get(LOCALE_COOKIE_NAME)?.value;
-  let locale: Locale;
-  if (isLocale(cookieLocale)) {
-    locale = cookieLocale;
-  } else {
-    const headersList = await headers();
-    locale = matchLocale(headersList.get("accept-language"));
-  }
+  const requested = await requestLocale;
+  const locale = routing.locales.includes(requested as any)
+    ? (requested as (typeof routing.locales)[number])
+    : routing.defaultLocale;
 
-  const defaultMessages = (await import(`../messages/${DEFAULT_LOCALE}.json`))
-    .default;
+  const defaultMessages = (
+    await import(`../messages/${routing.defaultLocale}.json`)
+  ).default;
 
-  if (locale === DEFAULT_LOCALE) {
+  if (locale === routing.defaultLocale) {
     return { locale, messages: defaultMessages };
   }
 
   const userMessages = (await import(`../messages/${locale}.json`)).default;
-
   const messages = Object.fromEntries(
-    Object.keys(defaultMessages).map((namespace) => [
-      namespace,
-      { ...defaultMessages[namespace], ...userMessages[namespace] },
+    Object.keys(defaultMessages).map((ns) => [
+      ns,
+      { ...defaultMessages[ns], ...userMessages[ns] },
     ]),
   );
 

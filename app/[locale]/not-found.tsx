@@ -1,7 +1,12 @@
 import Link from "next/link";
 import { getTranslations, getLocale } from "next-intl/server";
+import type { Locale } from "@/i18n/locale-config";
 
-export default async function NotFound() {
+export default async function NotFound({
+  params,
+}: {
+  params: Promise<{ locale: Locale }>;
+}) {
   const locale = await getLocale();
   const t = await getTranslations({ locale, namespace: "NotFound" });
   return (

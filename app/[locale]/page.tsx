@@ -1,6 +1,7 @@
-import { useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
 import { notFound, redirect } from "next/navigation";
-import { supabase } from "./lib/supabase";
+import { supabase } from "../lib/supabase";
+import type { Locale } from "../../i18n/locale-config";
 
 const GITHUB_USERNAME = "whaiman";
 const REPO_NAME = "numerogram";
@@ -20,9 +21,14 @@ function slugifyQuery(raw: string): string {
   return s;
 }
 
-export default function Home() {
-  const t = useTranslations("Index");
-  const tf = useTranslations("Footer");
+export default async function Home({
+  params,
+}: {
+  params: Promise<{ locale: Locale }>;
+}) {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "Index" });
+  const tf = await getTranslations({ locale, namespace: "Footer" });
 
   async function handleRandomRedirect() {
     "use server";
@@ -32,7 +38,7 @@ export default function Home() {
       notFound();
     }
 
-    redirect(`/${randomSlug}`);
+    redirect(`/${locale}/${randomSlug}`);
   }
 
   async function handleSearch(formData: FormData) {
@@ -46,7 +52,7 @@ export default function Home() {
 
     const targetSlug = cleanSlug || rawQuery.trim();
 
-    redirect(`/${encodeURIComponent(targetSlug)}`);
+    redirect(`/${locale}/${encodeURIComponent(targetSlug)}`);
   }
 
   const currentYear = new Date().getFullYear();

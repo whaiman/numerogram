@@ -1,14 +1,14 @@
 "use client";
 
 import { useEffect, useRef, useState, useTransition } from "react";
-import { useRouter } from "next/navigation";
-import { Check, ChevronDown, Globe } from "lucide-react";
-import { setLocale } from "@/actions/set-locale";
+import { usePathname, useRouter } from "@/i18n/navigation";
 import { LOCALES, LOCALE_LABELS, type Locale } from "@/i18n/locale-config";
+import { Check, ChevronDown, Globe } from "lucide-react";
 
 export function LanguageSwitcher({ currentLocale }: { currentLocale: Locale }) {
   const [isOpen, setIsOpen] = useState(false);
   const [isPending, startTransition] = useTransition();
+  const pathname = usePathname();
   const router = useRouter();
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -28,10 +28,8 @@ export function LanguageSwitcher({ currentLocale }: { currentLocale: Locale }) {
   const handleSwitch = (locale: Locale) => {
     setIsOpen(false);
     if (locale === currentLocale) return;
-
-    startTransition(async () => {
-      await setLocale(locale);
-      router.refresh();
+    startTransition(() => {
+      router.replace(pathname, { locale });
     });
   };
 
@@ -51,9 +49,7 @@ export function LanguageSwitcher({ currentLocale }: { currentLocale: Locale }) {
         {LOCALE_LABELS[currentLocale]}
         <ChevronDown
           size={16}
-          className={`text-zinc-500 transition-transform ${
-            isOpen ? "rotate-180" : ""
-          }`}
+          className={`text-zinc-500 transition-transform ${isOpen ? "rotate-180" : ""}`}
         />
       </button>
 

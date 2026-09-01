@@ -1,8 +1,12 @@
-import { supabase } from "@/app/lib/supabase";
+import { Suspense } from "react";
 import { notFound } from "next/navigation";
-import { getLocale, getTranslations } from "next-intl/server";
+import { getTranslations } from "next-intl/server";
 import Link from "next/link";
 import { getLocalizedData } from "@/utils/i18n";
+import { getNumberBySlug, getFactsByNumberId } from "@/app/lib/data";
+// import { supabase } from "@/app/lib/supabase";
+// import { routing } from "@/i18n/routing";
+// import type { Locale } from "@/i18n/locale-config";
 
 interface Fact {
   id: number;
@@ -14,29 +18,32 @@ interface Fact {
   };
 }
 
+type Translator = (key: string) => string;
+
 export default async function NumberPage({
   params,
 }: {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ locale: string; slug: string }>;
 }) {
-  const { slug } = await params;
-  const locale = await getLocale();
+  const { locale, slug } = await params;
   const t = await getTranslations({ locale, namespace: "NumberPage" });
   const tCommon = await getTranslations({ locale, namespace: "Common" });
 
-  const { data: dbnumberData, error } = await supabase
-    .from("numbers")
-    .select(
-      `
-    id, slug, is_constant, title, bio,
-    facts (
-    id, content, upvotes,
-    categories (slug, name)
-    )
-    `,
-    )
-    .eq("slug", slug)
-    .single();
+  // const { data: dbnumberData, error } = await supabase
+  //   .from("numbers")
+  //   .select(
+  //     `
+  //   id, slug, is_constant, title, bio,
+  //   facts (
+  //   id, content, upvotes,
+  //   categories (slug, name)
+  //   )
+  //   `,
+  //   )
+  //   .eq("slug", slug)
+  //   .single();
+
+  const dbnumberData = await getNumberBySlug(slug);
 
   let numberData = dbnumberData;
   if (!numberData) {
@@ -59,7 +66,7 @@ export default async function NumberPage({
         en: "This is an unexplored number. Information about it has not been added to the database yet.",
         az: "Bu araşdırılmamış ədəddir. Məlumat hələ bazaya əlavə edilməyib.",
       },
-      facts: [],
+      // facts: [],
     };
   }
 
@@ -79,7 +86,7 @@ export default async function NumberPage({
       {/* Back button */}
       <nav className="mt-4">
         <Link
-          href={`/`}
+          href={`/${locale}`}
           className="text-zinc-400 hover:text-emerald-400 transition-colors flex items-center gap-2"
         >
           ← {t("back")}
@@ -142,7 +149,19 @@ export default async function NumberPage({
             {t("addFactButton")}
           </button>
         </div>
-        <div className="flex flex-col gap-4">
+        {isSynthetic ? (
+          <EmptyFacts message={t("noFacts")} />
+        ) : (
+          <Suspense fallback={<FactsSkeleton />}>
+            <FactsFeed
+              numberId={numberData.id as number}
+              locale={locale}
+              t={t}
+              tCommon={tCommon}
+            />
+          </Suspense>
+        )}
+        {/* <div className="flex flex-col gap-4">
           {numberData.facts && numberData.facts.length > 0 ? (
             (numberData.facts as any).map((fact: Fact) => (
               <article
@@ -172,8 +191,80 @@ export default async function NumberPage({
               <p className="text-zinc-500">{t("noFacts")}</p>
             </div>
           )}
-        </div>
+        </div> */}
       </section>
     </main>
+  );
+}
+
+async function FactsFeed({
+  numberId,
+  locale,
+  t,
+  tCommon,
+}: {
+  numberId: number;
+  locale: string;
+  t: Translator;
+  tCommon: Translator;
+}) {
+  const facts = await getFactsByNumberId(numberId);
+
+  if (!facts || facts.length === 0) {
+    return <EmptyFacts message={t("noFacts")} />;
+  }
+
+  return (
+    <div className="flex flex-col gap-4">
+      {(facts as Fact[]).map((fact) => (
+        <article
+          key={fact.id}
+          className="bg-zinc-900 border border-zinc-800 rounded-2xl p-5 hover:border-zinc-700 transition-colors"
+        >
+          <div className="flex items-center gap-2 mb-3">
+            <span className="text-xs font-bold uppercase tracking-wider bg-zinc-800 text-zinc-300 px-2 py-1 rounded">
+              {getLocalizedData(fact.categories.name, locale)}
+            </span>
+          </div>
+          <p className="text-zinc-200 text-lg leading-relaxed mb-4">
+            {getLocalizedData(fact.content, locale)}
+          </p>
+          <div className="flex items-center gap-4 border-t border-zinc-800/60 pt-3">
+            <button className="flex items-center gap-1 text-sm text-zinc-400 hover:text-emerald-400 transition">
+              ▲ {fact.upvotes || 0} {tCommon("upvote")}
+            </button>
+            <button className="text-sm text-zinc-500 hover:text-zinc-300 transition">
+              {tCommon("share")}
+            </button>
+          </div>
+        </article>
+      ))}
+    </div>
+  );
+}
+
+function EmptyFacts({ message }: { message: string }) {
+  return (
+    <div className="text-center py-10 bg-zinc-900/30 rounded-2xl border border-zinc-800/50 border-dashed">
+      <p className="text-zinc-500">{message}</p>
+    </div>
+  );
+}
+
+function FactsSkeleton() {
+  return (
+    <div className="flex flex-col gap-4 animate-pulse">
+      {[0, 1, 2].map((i) => (
+        <div
+          key={i}
+          className="bg-zinc-900 border border-zinc-800 rounded-2xl p-5"
+        >
+          <div className="h-4 w-20 bg-zinc-800 rounded mb-4" />
+          <div className="h-4 w-full bg-zinc-800 rounded mb-2" />
+          <div className="h-4 w-5/6 bg-zinc-800 rounded mb-4" />
+          <div className="h-3 w-24 bg-zinc-800 rounded" />
+        </div>
+      ))}
+    </div>
   );
 }
