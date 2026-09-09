@@ -4,19 +4,6 @@ import { getTranslations } from "next-intl/server";
 import Link from "next/link";
 import { getLocalizedData } from "@/utils/i18n";
 import { getNumberBySlug, getFactsByNumberId } from "@/app/lib/data";
-// import { supabase } from "@/app/lib/supabase";
-// import { routing } from "@/i18n/routing";
-// import type { Locale } from "@/i18n/locale-config";
-
-interface Fact {
-  id: number;
-  content: string;
-  upvotes: number;
-  categories:
-    | { name: any; slug: string }
-    | { name: any; slug: string }[]
-    | null;
-}
 
 type Translator = (key: string) => string;
 
@@ -28,20 +15,6 @@ export default async function NumberPage({
   const { locale, slug } = await params;
   const t = await getTranslations({ locale, namespace: "NumberPage" });
   const tCommon = await getTranslations({ locale, namespace: "Common" });
-
-  // const { data: dbnumberData, error } = await supabase
-  //   .from("numbers")
-  //   .select(
-  //     `
-  //   id, slug, is_constant, title, bio,
-  //   facts (
-  //   id, content, upvotes,
-  //   categories (slug, name)
-  //   )
-  //   `,
-  //   )
-  //   .eq("slug", slug)
-  //   .single();
 
   const dbnumberData = await getNumberBySlug(slug);
 
@@ -66,7 +39,6 @@ export default async function NumberPage({
         en: "This is an unexplored number. Information about it has not been added to the database yet.",
         az: "Bu araşdırılmamış ədəddir. Məlumat hələ bazaya əlavə edilməyib.",
       },
-      // facts: [],
     };
   }
 
@@ -161,37 +133,6 @@ export default async function NumberPage({
             />
           </Suspense>
         )}
-        {/* <div className="flex flex-col gap-4">
-          {numberData.facts && numberData.facts.length > 0 ? (
-            (numberData.facts as any).map((fact: Fact) => (
-              <article
-                key={fact.id}
-                className="bg-zinc-900 border border-zinc-800 rounded-2xl p-5 hover:border-zinc-700 transition-colors"
-              >
-                <div className="flex items-center gap-2 mb-3">
-                  <span className="text-xs font-bold uppercase tracking-wider bg-zinc-800 text-zinc-300 px-2 py-1 rounded">
-                    {getLocalizedData(fact.categories.name, locale)}
-                  </span>
-                </div>
-                <p className="text-zinc-200 text-lg leading-relaxed mb-4">
-                  {getLocalizedData(fact.content, locale)}
-                </p>
-                <div className="flex items-center gap-4 border-t border-zinc-800/60 pt-3">
-                  <button className="flex items-center gap-1 text-sm text-zinc-400 hover:text-emerald-400 transition">
-                    ▲ {fact.upvotes || 0} {tCommon("upvote")}
-                  </button>
-                  <button className="text-sm text-zinc-500 hover:text-zinc-300 transition">
-                    {tCommon("share")}
-                  </button>
-                </div>
-              </article>
-            ))
-          ) : (
-            <div className="text-center py-10 bg-zinc-900/30 rounded-2xl border border-zinc-800/50 border-dashed">
-              <p className="text-zinc-500">{t("noFacts")}</p>
-            </div>
-          )}
-        </div> */}
       </section>
     </main>
   );
@@ -216,8 +157,7 @@ async function FactsFeed({
 
   return (
     <div className="flex flex-col gap-4">
-      {(facts as Fact[]).map((fact) => {
-        // Универсальное извлечение: работаем и с объектом, и с массивом
+      {facts.map((fact) => {
         const category = Array.isArray(fact.categories)
           ? fact.categories[0]
           : fact.categories;
