@@ -96,7 +96,7 @@ export default async function NumberPage({
       {/* Number's profile */}
       <header className="text-center py-10 bg-zinc-900/50 rounded-3xl border border-zinc-800">
         {isSynthetic && (
-          <span className="inline-block mb-4 text-xs font-bold uppercase racking-widest bg-blue-500/10 text-blue-400 border border-blue-500/20 px-3 py-1 rounded-full">
+          <span className="inline-block mb-4 text-xs font-bold uppercase tracking-widest bg-blue-500/10 text-blue-400 border border-blue-500/20 px-3 py-1 rounded-full">
             ⚡ {t("generatedProfile")}
           </span>
         )}
