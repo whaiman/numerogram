@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import { LanguageSwitcher } from "@/components/language-switcher";
 import type { Locale } from "@/i18n/locale-config";
+import { Nav } from "@/components/nav";
 import { Toaster } from "sonner";
 import Script from "next/script";
 import "../globals.css";
@@ -31,6 +32,7 @@ export default async function LocaleLayout({
   const locale = await getLocale();
   if (!(routing.locales as readonly string[]).includes(locale)) notFound();
   const messages = await getMessages();
+  const tNav = await getTranslations({ locale, namespace: "Nav" });
 
   return (
     <html lang={locale} suppressHydrationWarning>
@@ -40,9 +42,19 @@ export default async function LocaleLayout({
           strategy="afterInteractive"
         />
         <NextIntlClientProvider messages={messages}>
-          <div className="fixed top-0 z-[100] flex items-center gap-2 p-4 mt-2">
+          {/* <div className="fixed top-0 z-[100] flex items-center gap-2 p-4 mt-2">
             <LanguageSwitcher currentLocale={locale as Locale} />
-          </div>
+          </div> */}
+          <Nav
+            locale={locale as Locale}
+            siteName={tNav("home")}
+            demoTitle={tNav("demoTitle")}
+            demoText={tNav("demoText")}
+            supportTitle={tNav("supportTitle")}
+            supportText={tNav("supportText")}
+            supportButton={tNav("supportButton")}
+            infoMenuLabel={tNav("infoMenuLabel")}
+          />
           {children}
           <Toaster richColors position="bottom-right" theme="system" />
         </NextIntlClientProvider>

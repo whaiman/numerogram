@@ -42,5 +42,14 @@
         "githubProfile": "whaiman",
         "repoLabel": "Repozitoriya",
         "rights": "Bütün hüquqlar qorunur."
+    },
+    "Nav": {
+        "home": "Numerogram",
+        "infoMenuLabel": "Layihə haqqında",
+        "demoTitle": "Bu demo versiyadır",
+        "demoText": "Numerogram hələ inkişaf edən gənc layihədir - bəzi funksiyalar hələ yoxdur, dizayn və məzmun dəyişə bilər. Sərbəst gəzin, amma bəzi kələ-kötürlüklərə hazır olun.",
+        "supportTitle": "Layihəni dəstəklə",
+        "supportText": "Buy Me a Coffee ilə dəstək odənişli funksiyalar açmır. Hər alınmış qəhvə layihə üzərində bir işləmək axşamına çevirilir. İnkişafı sürətləndirməyə kömək etmək istəyirsinizsə, kiçik bir dəstək çox şey deməkdir. Təşəkkürlər!",
+        "supportButton": "Dəstək olmaq"
     }
 }

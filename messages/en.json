@@ -2,24 +2,45 @@
     "Index": {
         "title": "Numerogram",
         "subtitle": "From math constants to internet memes: the home for all numbers in the universe.",
-        "randomNumber": "Random Number",
-        "searchPlaceholder": "Search number (e.g. 42, pi)...",
+        "searchPlaceholder": "Search any number (e.g. 42, pi, 100500)...",
         "searchButton": "Search",
+        "randomNumber": "Random Number",
+        "or": "or",
+        "livePromise": "This page doesn't exist yet. It will be created the moment you hit GO.",
+        "curatedWallTitle": "Curated Wall",
+        "curatedWallSubtitle": "Legendary numbers handpicked by the community",
+        "justPublishedTitle": "Just Published",
+        "justPublishedSubtitle": "Fresh numbers with stories",
+        "viewAll": "View all",
+        "infiniteEdgeTitle": "Infinite Edge",
+        "infiniteEdgeDescription": "An endless canvas of unvisited numbers. Each step reveals a new mathematical space waiting for its first story.",
+        "exploreInfiniteEdge": "Explore the infinite edge",
         "trending": "Trending Numbers",
         "suggestFact": "Suggest a Fact",
-        "or": "or"
+        "number": "Number"
     },
     "NumberPage": {
-        "passportTitle": "Number Passport",
+        "passportTitle": "Mathematical Passport",
         "parity": "Parity",
         "even": "Even",
         "odd": "Odd",
         "binary": "Binary",
-        "factsTitle": "Facts Feed",
-        "noFacts": "No facts added for this number yet.",
-        "addFactButton": "+ Add Fact",
+        "prime": "Prime",
+        "factors": "Factors",
+        "roman": "Roman",
+        "factsTitle": "Cultural Wall",
+        "noFacts": "This number has no story yet.",
+        "addFactButton": "+ Pin the first fact",
         "back": "Back",
-        "generatedProfile": "Automatically generated"
+        "generatedProfile": "Generated for you",
+        "firstAuthor": "First Author",
+        "emptyStateTitle": "You're the first here.",
+        "emptyStateSubtitle": "No one has ever pinned a fact to this number. This page was generated just now. What does this number mean to you?",
+        "pinFirstFact": "Pin the first fact",
+        "mathematicalFacts": "Mathematical Facts",
+        "culturalFacts": "Cultural Facts",
+        "computedProperties": "Computed Properties",
+        "communityStories": "Community Stories"
     },
     "NotFound": {
         "h1": "Anomaly in the matrix",
@@ -30,7 +51,9 @@
         "science": "Science",
         "memes": "Memes",
         "pop-culture": "Pop Culture",
-        "history": "History"
+        "history": "History",
+        "tech": "Technologies",
+        "myths": "Myths"
     },
     "Common": {
         "loading": "Loading...",
@@ -42,5 +65,14 @@
         "githubProfile": "whaiman",
         "repoLabel": "Repository",
         "rights": "All rights reserved."
+    },
+    "Nav": {
+        "home": "Numerogram",
+        "infoMenuLabel": "About this project",
+        "demoTitle": "This is a demo version",
+        "demoText": "Numerogram is an early, actively evolving project - some features are still missing, and the design and content are subject to change. Feel free to explore, but expect rough edges.",
+        "supportTitle": "Support the project",
+        "supportText": "Supporting via Buy Me a Coffee unlocks no premium features. Every coffee turns into an evening of work on the project. If you'd like to help this project move faster, a small donation goes a long way - thank you!",
+        "supportButton": "Buy me a coffee"
     }
 }
